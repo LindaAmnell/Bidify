@@ -26,9 +26,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="Core\Interfaces\" />
     <Folder Include="Core\Services\" />
-    <Folder Include="Data\Interfaces\" />
-    <Folder Include="Data\Migrations\" />
-    <Folder Include="Data\Repo\" />
     <Folder Include="Dtos\ActionDto\" />
     <Folder Include="Dtos\BidDto\" />
     <Folder Include="Dtos\UserDto\" />

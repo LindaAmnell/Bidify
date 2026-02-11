@@ -1,4 +1,6 @@
 using Bidify.API.Data;
+using Bidify.API.Data.Interfaces;
+using Bidify.API.Data.Repo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -20,7 +22,9 @@ builder.Services.AddDbContext<BidifyDbContext>(options =>
     )
 );
 
-
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IAuctionRepo, AuctionRepo>();
+builder.Services.AddScoped<IBidRepo, BidRepo>();
 
 builder.Services.AddAuthentication(opt =>
 {
