@@ -1,0 +1,16 @@
+# .NET
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
+# Environment
+appsettings.Development.json
+
+# Node
+node_modules/
+dist/
+
+# Logs
+*.log
