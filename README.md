@@ -1,5 +1,7 @@
 # Bidify
 
+🚧 **Project under development**
+
 Bidify is a fullstack auction platform built with:
 
 - ASP.NET Core Web API
