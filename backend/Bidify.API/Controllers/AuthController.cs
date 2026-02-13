@@ -1,4 +1,5 @@
 ﻿using Bidify.API.Core.Interfaces;
+using Bidify.API.Dtos.UserDto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,11 +17,11 @@ namespace Bidify.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(string username, string email, string password)
+        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             try
             {
-                var token = await _authService.RegisterAsync(username, email, password);
+                var token = await _authService.RegisterAsync(dto.Username, dto.Email, dto.Password);
                 return Ok(token);
             }
             catch (Exception ex)
@@ -30,11 +31,11 @@ namespace Bidify.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             try
             {
-                var token = await _authService.LoginAsync(username, password);
+                var token = await _authService.LoginAsync(dto.Username, dto.Password);
                 return Ok(token);
             }
             catch (Exception ex)
@@ -42,5 +43,6 @@ namespace Bidify.API.Controllers
                 return Unauthorized(ex.Message);
             }
         }
+
     }
 }

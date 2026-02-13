@@ -1,6 +1,8 @@
+using Bidify.API.Core.Enum;
 using Bidify.API.Core.Interfaces;
 using Bidify.API.Core.Services;
 using Bidify.API.Data;
+using Bidify.API.Data.Entities;
 using Bidify.API.Data.Interfaces;
 using Bidify.API.Data.Repo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -60,6 +62,27 @@ builder.Services.AddAuthentication(opt =>
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<BidifyDbContext>();
+
+    if (!context.Users.Any(u => u.Role == UserRole.Admin))
+    {
+        var admin = new User
+        {
+            Username = "admin",
+            Email = "admin@bidify.com",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin123!"),
+            Role = UserRole.Admin,
+            IsActive = true
+        };
+
+        context.Users.Add(admin);
+        context.SaveChanges();
+    }
+}
+
 
 app.UseRouting();
 

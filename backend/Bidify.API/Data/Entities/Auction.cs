@@ -15,6 +15,9 @@ namespace Bidify.API.Data.Entities
         [MaxLength(1000)]
         public string Description { get; set; } = null!;
 
+        [MaxLength(500)]
+        public string? ImageUrl { get; set; }
+
         [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal StartPrice { get; set; }

@@ -24,10 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Dtos\ActionDto\" />
     <Folder Include="Dtos\BidDto\" />
-    <Folder Include="Dtos\UserDto\" />
   </ItemGroup>
 
 </Project>
