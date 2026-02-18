@@ -1,0 +1,22 @@
+.searchbar {
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+}
+
+.searchbar input {
+  width: 70%;
+  max-width: 400px;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.icon {
+  color: white;
+  width: 2em;
+  height: 2em;
+  margin-right: 0.5em;
+}

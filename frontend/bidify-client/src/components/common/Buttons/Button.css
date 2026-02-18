@@ -1,0 +1,28 @@
+.btn {
+  background-color: #94ac97;
+  font-family: "Josefin Slab", serif;
+  padding: 0.6em 1em;
+  cursor: pointer;
+  width: 8em;
+  border-radius: 1em;
+  font-size: 18px;
+  text-align: center;
+  border: none;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #8ab58d;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.45);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
+}

@@ -1,0 +1,29 @@
+.auction-btn {
+  background: #1b1b1b;
+  color: white;
+  border: none;
+  padding: 0.6em 1em;
+  cursor: pointer;
+  width: 6.6em;
+  border-radius: 1em;
+  font-family: "Josefin Slab", serif;
+  font-size: 18px;
+  text-align: center;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.auction-btn:hover {
+  background: #333;
+  /* transform: translateY(-2px); */
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.55);
+}
+
+/* .auction-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+} */

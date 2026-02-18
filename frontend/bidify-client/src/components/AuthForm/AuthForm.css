@@ -1,0 +1,32 @@
+.login-section {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  color: white;
+  gap: 4em;
+  margin-top: 7em;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 1em;
+  font-size: 20px;
+}
+
+input {
+  padding: 0.5em 0.8em;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-size: 1em;
+}
+
+.btn-div {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
