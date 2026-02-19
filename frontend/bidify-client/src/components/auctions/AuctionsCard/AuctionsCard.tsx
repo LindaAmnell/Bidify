@@ -1,17 +1,17 @@
 import "./AuctionsCard.css";
 import AuctionsButton from "../../common/AuctionsButton/AuctionsButton";
 import { useContext } from "react";
-import { AuthContext } from "../../../context/AutchContext";
+import { AuthContext } from "../../../context/AuthContext";
 import type { Auction } from "../../../types/Auction";
 
 type Props = {
   auction: Auction;
+  showOwnerActions?: boolean;
 };
-
-const AuctionCard = ({ auction }: Props) => {
+const AuctionCard = ({ auction, showOwnerActions = false }: Props) => {
   const { user } = useContext(AuthContext);
 
-  const isMyAuction = auction.userId === user?.id;
+  const isMyAuction = auction.userId === user?.userId;
 
   return (
     <div className="auction-card open">
@@ -25,14 +25,17 @@ const AuctionCard = ({ auction }: Props) => {
         <p>{auction.highestBid} SEK</p>
       </div>
 
-      {!isMyAuction && (
-        <div className="card-actions">
-          <AuctionsButton text="Bid" />
-          <AuctionsButton text="Inspect" />
-        </div>
-      )}
+      <div className="card-actions">
+        {!isMyAuction && (
+          <div className="bid-wrapper">
+            <AuctionsButton text="Bid" disabled={!user} />
+            {!user && <small className="hint">Login to bid</small>}
+          </div>
+        )}
+        {!showOwnerActions && <AuctionsButton text="Inspect" />}
+      </div>
 
-      {isMyAuction && (
+      {showOwnerActions && isMyAuction && (
         <div className="card-actions">
           <AuctionsButton text="Delete" />
           <AuctionsButton text="Change" />

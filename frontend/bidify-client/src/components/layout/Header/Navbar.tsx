@@ -1,12 +1,11 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../../context/AutchContext";
+import { AuthContext } from "../../../context/AuthContext";
 import "./Navbar.css";
-// import Button from "../../common/Buttons/Button";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, logout, user } = useContext(AuthContext);
 
   return (
     <header className="navbar">
@@ -21,15 +20,18 @@ const Navbar = () => {
       <nav className={`nav-links ${isOpen ? "open" : ""}`}>
         <Link to="/">Auctions</Link>
 
-        <Link to="myAuction">My auctions</Link>
-        {isAuthenticated && <Link to="myAuction">My auctions</Link>}
-
-        {isAuthenticated && <Link to="/profile">Profile</Link>}
+        {isAuthenticated && <Link to="/myAuction">My auctions</Link>}
 
         {!isAuthenticated && <Link to="/login">Login</Link>}
-        {/* {!isAuthenticated && <Button text="Login" />} */}
 
-        {isAuthenticated && <button className="logout-btn">Logout</button>}
+        {isAuthenticated && (
+          <>
+            <span className="nav-user">Hi {user?.username}</span>
+            <button className="logout-btn" onClick={logout}>
+              Logout
+            </button>
+          </>
+        )}
       </nav>
     </header>
   );

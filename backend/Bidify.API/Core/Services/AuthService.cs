@@ -2,6 +2,7 @@
 using Bidify.API.Core.Interfaces;
 using Bidify.API.Data.Entities;
 using Bidify.API.Data.Interfaces;
+using Bidify.API.Dtos.AuthDto;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -19,7 +20,10 @@ namespace Bidify.API.Core.Services
             _userRepo = userRepo;
             _configuration = configuration;
         }
-        public async Task<string> RegisterAsync(string username, string email, string password)
+        public async Task<AuthResponseDto> RegisterAsync(
+      string username,
+      string email,
+      string password)
         {
             var existingUser = await _userRepo.GetByUsernameAsync(username);
             if (existingUser != null)
@@ -43,10 +47,18 @@ namespace Bidify.API.Core.Services
             await _userRepo.AddAsync(user);
             await _userRepo.SaveChangesAsync();
 
-            return GenerateToken(user);
+            var token = GenerateToken(user);
+
+            return new AuthResponseDto
+            {
+                Token = token,
+                UserId = user.UserId,
+                Username = user.Username
+            };
         }
 
-        public async Task<string> LoginAsync(string username, string password)
+
+        public async Task<AuthResponseDto> LoginAsync(string username, string password)
         {
             var user = await _userRepo.GetByUsernameAsync(username);
 
@@ -56,12 +68,17 @@ namespace Bidify.API.Core.Services
             if (!user.IsActive)
                 throw new InvalidOperationException("Account is deactivated");
 
-            var validPassword = BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
-
-            if (!validPassword)
+            if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
                 throw new InvalidOperationException("Invalid credentials");
 
-            return GenerateToken(user);
+            var token = GenerateToken(user);
+
+            return new AuthResponseDto
+            {
+                Token = token,
+                UserId = user.UserId,
+                Username = user.Username
+            };
         }
 
         private string GenerateToken(User user)

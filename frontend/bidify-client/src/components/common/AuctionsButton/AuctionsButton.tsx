@@ -1,17 +1,15 @@
 import "./AuctionsButton.css";
-
-type ButtonProps = {
+type Props = {
   text: string;
   onClick?: () => void;
+  disabled?: boolean;
 };
 
-const AuctionsButton = ({ text, onClick }: ButtonProps) => {
+const AuctionsButton = ({ text, onClick, disabled }: Props) => {
   return (
-    <>
-      <button className="auction-btn" onClick={onClick}>
-        {text}
-      </button>
-    </>
+    <button onClick={onClick} disabled={disabled} className="auction-btn">
+      {text}
+    </button>
   );
 };
 

@@ -62,7 +62,7 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  width: 100%;
+  width: 70%;
   text-align: center;
 }
 .info-div p {
