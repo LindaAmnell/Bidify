@@ -15,8 +15,9 @@ namespace Bidify.API.Data.Entities
         [MaxLength(1000)]
         public string Description { get; set; } = null!;
 
+        [Required]
         [MaxLength(500)]
-        public string? ImageUrl { get; set; }
+        public string ImageUrl { get; set; } = null!;
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
@@ -31,7 +32,8 @@ namespace Bidify.API.Data.Entities
         [Required]
         public int UserId { get; set; }
 
-        public User User { get; set; } = null!;
+        public User? User { get; set; }
+
         public List<Bid> Bids { get; set; } = new();
     }
 }

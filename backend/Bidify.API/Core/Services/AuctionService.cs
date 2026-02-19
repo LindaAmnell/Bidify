@@ -18,6 +18,7 @@ namespace Bidify.API.Core.Services
          
             auction.StartDate = DateTime.UtcNow;
             auction.IsActive = true;
+            auction.EndDate = auction.StartDate.AddDays(7);
 
             await _auctionRepo.AddAsync(auction);
             await _auctionRepo.SaveChangesAsync();
@@ -64,5 +65,21 @@ namespace Bidify.API.Core.Services
             _auctionRepo.Update(auction);
             await _auctionRepo.SaveChangesAsync();
         }
+
+        public async Task<List<Auction>> GetAllAsync()
+        {
+            return await _auctionRepo.GetAllAsync();
+        }
+
+        public async Task<List<Auction>> GetAllClosedAsync()
+        {
+            var auctions = await _auctionRepo.GetAllAsync();
+
+            return auctions
+                .Where(a => a.IsActive && a.EndDate <= DateTime.UtcNow)
+                .ToList();
+        }
+
     }
+
 }

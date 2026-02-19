@@ -24,7 +24,7 @@ namespace Bidify.API.Data.Repo
         public async Task<List<Auction>> GetAllAsync()
         {
             return await _context.Auctions
-                .Include(a => a.User)
+                .Include(a => a.Bids)
                 .ToListAsync();
         }
 
@@ -38,8 +38,10 @@ namespace Bidify.API.Data.Repo
         {
             return await _context.Auctions
                 .Where(a => a.UserId == userId)
+                .Include(a => a.Bids)
                 .ToListAsync();
         }
+
 
         public async Task AddAsync(Auction auction)
         {

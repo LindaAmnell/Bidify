@@ -25,12 +25,14 @@ builder.Services.AddDbContext<BidifyDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
-
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IAuctionRepo, AuctionRepo>();
 builder.Services.AddScoped<IBidRepo, BidRepo>();
+
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuctionService, AuctionService>();
+
 
 
 

@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\ActionDto\" />
     <Folder Include="Dtos\BidDto\" />
   </ItemGroup>
 
