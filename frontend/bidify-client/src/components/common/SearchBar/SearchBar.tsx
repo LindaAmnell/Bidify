@@ -1,22 +1,21 @@
 import "./SearchBar.css";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
-// type SearchBarProps = {
-//   value: string;
-//   onChange: (value: string) => void;
-// };
+type SearchBarProps = {
+  onSearch: (value: string) => void;
+};
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch }: SearchBarProps) => {
   return (
     <div className="searchbar">
       <FaMagnifyingGlass className="icon" />
       <input
         type="text"
         placeholder="Search auctions..."
-        // value={value}
-        // onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onSearch(e.target.value)}
       />
     </div>
   );
 };
+
 export default SearchBar;

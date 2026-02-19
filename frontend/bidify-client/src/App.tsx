@@ -1,13 +1,19 @@
 import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./routes/AppRouter";
 import Navbar from "./components/layout/Header/Navbar";
+import { AuctionsProvider } from "./context/AuctionContext";
+import { AuthProvider } from "./context/AutchContext";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <AppRouter />
-    </BrowserRouter>
+    <AuthProvider>
+      <AuctionsProvider>
+        <BrowserRouter>
+          <Navbar />
+          <AppRouter />
+        </BrowserRouter>
+      </AuctionsProvider>
+    </AuthProvider>
   );
 };
 

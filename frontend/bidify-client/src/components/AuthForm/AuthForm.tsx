@@ -9,19 +9,21 @@ const AuthForm = () => {
   };
 
   return (
-    <section className="login-section">
-      <div className="login-form">
+    <section className="form-section">
+      <form className="form">
         <label>Username</label>
-        <input type="text" />
+        <input type="text" autoComplete="username" />
+
         <label>Password</label>
-        <input type="password" />
+        <input type="password" autoComplete="current-password" />
+
         {isRegister && (
           <>
             <label>Email</label>
-            <input type="text" />
+            <input type="email" autoComplete="email" />
           </>
         )}
-      </div>
+      </form>
 
       <div className="btn-div">
         {!isRegister && <Button text="Login" />}

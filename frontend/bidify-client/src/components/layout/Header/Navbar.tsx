@@ -21,7 +21,8 @@ const Navbar = () => {
       <nav className={`nav-links ${isOpen ? "open" : ""}`}>
         <Link to="/">Auctions</Link>
 
-        {isAuthenticated && <Link to="/my-auctions">My auctions</Link>}
+        <Link to="myAuction">My auctions</Link>
+        {isAuthenticated && <Link to="myAuction">My auctions</Link>}
 
         {isAuthenticated && <Link to="/profile">Profile</Link>}
 

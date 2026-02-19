@@ -1,5 +1,5 @@
 .navbar {
-  position: relative; /* 👈 viktigt */
+  position: relative;
   color: white;
   padding: 1em;
   font-family: "Josefin Slab", serif;
@@ -33,7 +33,7 @@
   background: #1e1e1e;
   padding: 1em;
   text-align: end;
-  width: 6em;
+  width: 8em;
   z-index: 1000;
 }
 
