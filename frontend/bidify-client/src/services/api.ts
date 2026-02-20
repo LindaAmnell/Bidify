@@ -7,12 +7,9 @@ export const api = async (url: string, options?: RequestInit) => {
   }
 
   const text = await res.text();
-
-  // Om backend skickar JSON → parse
   try {
     return JSON.parse(text);
   } catch {
-    // annars returnera text (t.ex token)
     return text;
   }
 };

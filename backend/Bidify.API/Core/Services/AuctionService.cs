@@ -35,19 +35,19 @@ namespace Bidify.API.Core.Services
                 .ToList();
         }
 
-        public async Task<List<Auction>> SearchOpenAsync(string search)
-        {
-            var auctions = await _auctionRepo.SearchAsync(search);
+        //public async Task<List<Auction>> SearchOpenAsync(string search)
+        //{
+        //    var auctions = await _auctionRepo.SearchAsync(search);
 
-            return auctions
-                .Where(a => a.IsActive && a.EndDate > DateTime.UtcNow)
-                .ToList();
-        }
+        //    return auctions
+        //        .Where(a => a.IsActive && a.EndDate > DateTime.UtcNow)
+        //        .ToList();
+        //}
 
-        public async Task<List<Auction>> GetByUserAsync(int userId)
-        {
-            return await _auctionRepo.GetByUserIdAsync(userId);
-        }
+        //public async Task<List<Auction>> GetByUserAsync(int userId)
+        //{
+        //    return await _auctionRepo.GetByUserIdAsync(userId);
+        //}
 
         public async Task DeactivateAsync(int auctionId, int userId)
         {

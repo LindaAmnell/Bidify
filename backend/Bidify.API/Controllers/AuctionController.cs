@@ -60,16 +60,16 @@ namespace Bidify.API.Controllers
             return Ok(auctions);
         }
 
-        // 🔹 GET BY USER
-        [Authorize]
-        [HttpGet("my")]
-        public async Task<IActionResult> GetMyAuctions()
-        {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        //// 🔹 GET BY USER
+        //[Authorize]
+        //[HttpGet("my")]
+        //public async Task<IActionResult> GetMyAuctions()
+        //{
+        //    var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-            var auctions = await _auctionService.GetByUserAsync(userId);
-            return Ok(auctions);
-        }
+        //    var auctions = await _auctionService.GetByUserAsync(userId);
+        //    return Ok(auctions);
+        //}
 
 
         // 🔹 CREATE

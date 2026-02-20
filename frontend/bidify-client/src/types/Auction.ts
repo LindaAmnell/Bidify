@@ -10,3 +10,11 @@ export type Auction = {
   isActive: boolean;
   userId: number;
 };
+
+export type AuctionForm = {
+  title: string;
+  description: string;
+  startPrice: string;
+  imageUrl: string;
+  isCreate: boolean;
+};

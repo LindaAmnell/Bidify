@@ -52,6 +52,10 @@
 .logout-btn {
   background: none;
   border: none;
-  text-align: left;
+  text-align: right;
   cursor: pointer;
+}
+.nav-user {
+  font-size: 20px;
+  padding: 0.5em 0;
 }

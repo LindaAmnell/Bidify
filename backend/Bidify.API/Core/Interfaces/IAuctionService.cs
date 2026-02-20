@@ -10,9 +10,9 @@ namespace Bidify.API.Core.Interfaces
         Task<List<Auction>> GetAllOpenAsync();
         Task<List<Auction>> GetAllClosedAsync();    
 
-        Task<List<Auction>> SearchOpenAsync(string search);
+        //Task<List<Auction>> SearchOpenAsync(string search);
 
-        Task<List<Auction>> GetByUserAsync(int userId);
+        //Task<List<Auction>> GetByUserAsync(int userId);
 
         Task DeactivateAsync(int auctionId, int userId);
     }
