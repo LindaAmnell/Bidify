@@ -1,16 +1,22 @@
 ﻿using Bidify.API.Core.Interfaces;
 using Bidify.API.Data.Entities;
 using Bidify.API.Data.Interfaces;
+using Bidify.API.Data.Repo;
+using Bidify.API.Dtos.ActionDto;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bidify.API.Core.Services
 {
     public class AuctionService : IAuctionService
     {
         private readonly IAuctionRepo _auctionRepo;
+        private readonly IUserRepo _userRepo;
 
-        public AuctionService(IAuctionRepo auctionRepo)
+
+        public AuctionService(IAuctionRepo auctionRepo, IUserRepo userRepo)
         {
             _auctionRepo = auctionRepo;
+            _userRepo = userRepo;
         }
 
         public async Task<Auction> CreateAsync(Auction auction)
@@ -91,6 +97,34 @@ namespace Bidify.API.Core.Services
             await _auctionRepo.SaveChangesAsync();
         }
 
+        public async Task<AuctionDto?> GetByIdAsync(int auctionId)
+        {
+            var auction = await _auctionRepo.GetByIdAsync(auctionId);
+
+            if (auction == null) return null;
+
+            var owner = await _userRepo.GetByIdAsync(auction.UserId);
+
+
+            return new AuctionDto
+            {
+                AuctionId = auction.AuctionId,
+                Title = auction.Title,
+                Description = auction.Description,
+                ImageUrl = auction.ImageUrl,
+                StartPrice = auction.StartPrice,
+                HighestBid = auction.Bids.Any()
+                    ? auction.Bids.Max(b => b.BidAmount)
+                    : auction.StartPrice,
+                StartDate = auction.StartDate,
+                EndDate = auction.EndDate,
+                IsActive = auction.IsActive,
+                UserId = auction.UserId,
+                OwnerName = owner.Username
+            };
+
+          
+        }
     }
 
 }

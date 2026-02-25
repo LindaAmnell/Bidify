@@ -8,8 +8,13 @@ import { AuctionsContext } from "../../../context/AuctionContext";
 type Props = {
   auction: Auction;
   showOwnerActions?: boolean;
+  onInspect?: (id: number) => void;
 };
-const AuctionCard = ({ auction, showOwnerActions = false }: Props) => {
+const AuctionCard = ({
+  auction,
+  onInspect,
+  showOwnerActions = false,
+}: Props) => {
   const { user } = useContext(AuthContext);
   const { openEdit } = useContext(AuctionsContext);
 
@@ -34,7 +39,12 @@ const AuctionCard = ({ auction, showOwnerActions = false }: Props) => {
             {!user && <small className="hint">Login to bid</small>}
           </div>
         )}
-        {!showOwnerActions && <AuctionsButton text="Inspect" />}
+        {!showOwnerActions && (
+          <AuctionsButton
+            onClick={() => onInspect?.(auction.auctionId)}
+            text="Inspect"
+          />
+        )}
       </div>
 
       {showOwnerActions && isMyAuction && (

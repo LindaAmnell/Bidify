@@ -93,5 +93,16 @@ namespace Bidify.API.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<AuctionDto>> GetById(int id)
+        {
+            var auction = await _auctionService.GetByIdAsync(id);
+
+            if (auction == null)
+                return NotFound();
+
+            return Ok(auction);
+        }
     }
 }

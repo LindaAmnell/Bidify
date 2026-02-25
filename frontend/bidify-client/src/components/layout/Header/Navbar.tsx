@@ -18,16 +18,31 @@ const Navbar = () => {
       </div>
 
       <nav className={`nav-links ${isOpen ? "open" : ""}`}>
-        <Link to="/">Auctions</Link>
+        <Link onClick={() => setIsOpen(false)} to="/">
+          Auctions
+        </Link>
 
-        {isAuthenticated && <Link to="/myAuction">My auctions</Link>}
+        {isAuthenticated && (
+          <Link onClick={() => setIsOpen(false)} to="/myAuction">
+            My auctions
+          </Link>
+        )}
 
-        {!isAuthenticated && <Link to="/login">Login</Link>}
+        {!isAuthenticated && (
+          <Link onClick={() => setIsOpen(false)} to="/login">
+            Login
+          </Link>
+        )}
 
         {isAuthenticated && (
           <>
             <span className="nav-user">Hi {user?.username}</span>
-            <button className="logout-btn" onClick={logout}>
+            <button
+              className="logout-btn"
+              onClick={() => {
+                logout();
+                setIsOpen(false);
+              }}>
               Logout
             </button>
           </>

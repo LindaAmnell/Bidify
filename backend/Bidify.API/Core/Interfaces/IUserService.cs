@@ -1,4 +1,5 @@
 ﻿using Bidify.API.Data.Entities;
+using Bidify.API.Dtos.ActionDto;
 
 namespace Bidify.API.Core.Interfaces
 {

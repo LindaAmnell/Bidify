@@ -43,3 +43,6 @@ export const updateAuction = (
     body: JSON.stringify(auction),
   });
 };
+
+export const getAuctionById = (id: number) =>
+  api(`http://localhost:5215/api/auction/${id}`);

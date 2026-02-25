@@ -9,6 +9,7 @@ export type Auction = {
   endDate: string;
   isActive: boolean;
   userId: number;
+  ownerName: string;
 };
 
 export type AuctionForm = {

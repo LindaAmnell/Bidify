@@ -36,5 +36,7 @@ namespace Bidify.API.Core.Services
             _userRepo.Update(user);
             await _userRepo.SaveChangesAsync();
         }
+
+
     }
 }

@@ -29,5 +29,13 @@ namespace Bidify.API.Controllers
             return NoContent();
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var username = await _userService.GetByIdAsync(id);
+
+            return Ok(username);
+        }
+
     }
 }

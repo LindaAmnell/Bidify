@@ -4,11 +4,15 @@ import {
   getAllAuctions,
   createAuction as createAuctionService,
   updateAuction as updateAuctionService,
+  getAuctionById,
 } from "../services/auctionService";
 
 type AuctionsContextType = {
   auctions: Auction[];
   fetchAuctions: () => void;
+
+  inspectAuction: (id: number) => Promise<void>;
+  inspectedAuction: Auction | null;
 
   createAuction: (auction: {
     title: string;
@@ -42,6 +46,9 @@ export const AuctionsContext = createContext<AuctionsContextType>(
 
 export const AuctionsProvider = ({ children }: { children: ReactNode }) => {
   const [auctions, setAuctions] = useState<Auction[]>([]);
+  const [inspectedAuction, setInspectedAuction] = useState<Auction | null>(
+    null,
+  );
 
   const [form, setForm] = useState<AuctionForm>({
     title: "",
@@ -56,6 +63,16 @@ export const AuctionsProvider = ({ children }: { children: ReactNode }) => {
     try {
       const data = await getAllAuctions();
       setAuctions(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const inspectAuction = async (id: number) => {
+    try {
+      const auction = await getAuctionById(id);
+      console.log(auction);
+      setInspectedAuction(auction);
     } catch (error) {
       console.error(error);
     }
@@ -156,6 +173,8 @@ export const AuctionsProvider = ({ children }: { children: ReactNode }) => {
         openCreate,
         openEdit,
         closeForm,
+        inspectedAuction,
+        inspectAuction,
       }}>
       {children}
     </AuctionsContext.Provider>

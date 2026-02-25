@@ -5,9 +5,14 @@ import type { Auction } from "../../../types/Auction";
 type Props = {
   auctions: Auction[];
   showOwnerActions?: boolean;
+  onInspect?: (id: number) => void;
 };
 
-const AuctionList = ({ auctions, showOwnerActions = false }: Props) => {
+const AuctionList = ({
+  auctions,
+  onInspect,
+  showOwnerActions = false,
+}: Props) => {
   return (
     <section className="auction-grid">
       {auctions.map((auction) => (
@@ -15,6 +20,7 @@ const AuctionList = ({ auctions, showOwnerActions = false }: Props) => {
           key={auction.auctionId}
           auction={auction}
           showOwnerActions={showOwnerActions}
+          onInspect={onInspect}
         />
       ))}
     </section>
