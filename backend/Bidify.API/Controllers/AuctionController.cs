@@ -60,18 +60,6 @@ namespace Bidify.API.Controllers
             return Ok(auctions);
         }
 
-        //// 🔹 GET BY USER
-        //[Authorize]
-        //[HttpGet("my")]
-        //public async Task<IActionResult> GetMyAuctions()
-        //{
-        //    var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-
-        //    var auctions = await _auctionService.GetByUserAsync(userId);
-        //    return Ok(auctions);
-        //}
-
-
         // 🔹 CREATE
         [Authorize]
         [HttpPost]
@@ -91,6 +79,18 @@ namespace Bidify.API.Controllers
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             await _auctionService.DeactivateAsync(id, userId);
+            return NoContent();
+        }
+
+        // 🔹 UPDATE OWN AUCTION
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, Auction auction)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            await _auctionService.UpdateOwnAuctionAsync(id, userId, auction);
+
             return NoContent();
         }
     }

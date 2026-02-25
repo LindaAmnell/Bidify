@@ -35,20 +35,6 @@ namespace Bidify.API.Core.Services
                 .ToList();
         }
 
-        //public async Task<List<Auction>> SearchOpenAsync(string search)
-        //{
-        //    var auctions = await _auctionRepo.SearchAsync(search);
-
-        //    return auctions
-        //        .Where(a => a.IsActive && a.EndDate > DateTime.UtcNow)
-        //        .ToList();
-        //}
-
-        //public async Task<List<Auction>> GetByUserAsync(int userId)
-        //{
-        //    return await _auctionRepo.GetByUserIdAsync(userId);
-        //}
-
         public async Task DeactivateAsync(int auctionId, int userId)
         {
             var auction = await _auctionRepo.GetByIdAsync(auctionId);
@@ -78,6 +64,31 @@ namespace Bidify.API.Core.Services
             return auctions
                 .Where(a => a.IsActive && a.EndDate <= DateTime.UtcNow)
                 .ToList();
+        }
+
+        public async Task UpdateOwnAuctionAsync(int auctionId, int userId, Auction updatedAuction)
+        {
+            var auction = await _auctionRepo.GetByIdAsync(auctionId);
+
+            if (auction == null)
+                throw new InvalidOperationException("Auction not found");
+
+            if (auction.UserId != userId)
+                throw new UnauthorizedAccessException("Not allowed");
+
+            auction.Title = updatedAuction.Title;
+            auction.Description = updatedAuction.Description;
+            auction.StartDate = updatedAuction.StartDate;
+            auction.EndDate = updatedAuction.EndDate;
+            auction.ImageUrl = updatedAuction.ImageUrl;
+
+            if (!auction.Bids.Any())
+            {
+                auction.StartPrice = updatedAuction.StartPrice;
+            }
+
+            _auctionRepo.Update(auction);
+            await _auctionRepo.SaveChangesAsync();
         }
 
     }

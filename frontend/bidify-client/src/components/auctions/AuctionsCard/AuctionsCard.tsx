@@ -3,6 +3,7 @@ import AuctionsButton from "../../common/AuctionsButton/AuctionsButton";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import type { Auction } from "../../../types/Auction";
+import { AuctionsContext } from "../../../context/AuctionContext";
 
 type Props = {
   auction: Auction;
@@ -10,6 +11,7 @@ type Props = {
 };
 const AuctionCard = ({ auction, showOwnerActions = false }: Props) => {
   const { user } = useContext(AuthContext);
+  const { openEdit } = useContext(AuctionsContext);
 
   const isMyAuction = auction.userId === user?.userId;
 
@@ -38,7 +40,7 @@ const AuctionCard = ({ auction, showOwnerActions = false }: Props) => {
       {showOwnerActions && isMyAuction && (
         <div className="card-actions">
           <AuctionsButton text="Delete" />
-          <AuctionsButton text="Change" />
+          <AuctionsButton onClick={() => openEdit(auction)} text="Change" />
         </div>
       )}
     </div>

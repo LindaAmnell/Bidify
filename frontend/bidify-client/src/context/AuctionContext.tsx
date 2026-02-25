@@ -3,11 +3,13 @@ import type { Auction, AuctionForm } from "../types/Auction";
 import {
   getAllAuctions,
   createAuction as createAuctionService,
+  updateAuction as updateAuctionService,
 } from "../services/auctionService";
 
 type AuctionsContextType = {
   auctions: Auction[];
   fetchAuctions: () => void;
+
   createAuction: (auction: {
     title: string;
     description: string;
@@ -15,10 +17,23 @@ type AuctionsContextType = {
     imageUrl: string;
   }) => Promise<void>;
 
+  updateAuction: (
+    id: number,
+    auction: {
+      title: string;
+      description: string;
+      startPrice: number;
+      imageUrl: string;
+      startDate: string;
+      endDate: string;
+    },
+  ) => Promise<void>;
+
   form: AuctionForm;
   setForm: React.Dispatch<React.SetStateAction<AuctionForm>>;
   openCreate: () => void;
-  closeCreate: () => void;
+  openEdit: (auction: Auction) => void;
+  closeForm: () => void;
 };
 
 export const AuctionsContext = createContext<AuctionsContextType>(
@@ -36,6 +51,7 @@ export const AuctionsProvider = ({ children }: { children: ReactNode }) => {
     isCreate: false,
   });
 
+  // 🔹 FETCH
   const fetchAuctions = async () => {
     try {
       const data = await getAllAuctions();
@@ -45,6 +61,7 @@ export const AuctionsProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // 🔹 CREATE
   const createAuction = async (auction: {
     title: string;
     description: string;
@@ -67,12 +84,60 @@ export const AuctionsProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // 🔹 UPDATE
+  const updateAuction = async (
+    id: number,
+    auction: {
+      title: string;
+      description: string;
+      startPrice: number;
+      imageUrl: string;
+      startDate: string;
+      endDate: string;
+    },
+  ) => {
+    try {
+      await updateAuctionService(id, auction);
+      await fetchAuctions();
+
+      setForm({
+        title: "",
+        description: "",
+        startPrice: "",
+        imageUrl: "",
+        isCreate: false,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 🔹 FORM CONTROLS
   const openCreate = () => {
     setForm((prev) => ({ ...prev, isCreate: true }));
   };
 
-  const closeCreate = () => {
-    setForm((prev) => ({ ...prev, isCreate: false }));
+  const openEdit = (auction: Auction) => {
+    setForm({
+      title: auction.title,
+      description: auction.description,
+      startPrice: auction.startPrice.toString(),
+      imageUrl: auction.imageUrl,
+      isCreate: false,
+      auctionId: auction.auctionId,
+      hasBids: auction.highestBid > auction.startPrice,
+    });
+  };
+  const closeForm = () => {
+    setForm({
+      title: "",
+      description: "",
+      startPrice: "",
+      imageUrl: "",
+      isCreate: false,
+      auctionId: undefined,
+      hasBids: false,
+    });
   };
 
   useEffect(() => {
@@ -85,10 +150,12 @@ export const AuctionsProvider = ({ children }: { children: ReactNode }) => {
         auctions,
         fetchAuctions,
         createAuction,
+        updateAuction,
         form,
         setForm,
         openCreate,
-        closeCreate,
+        openEdit,
+        closeForm,
       }}>
       {children}
     </AuctionsContext.Provider>

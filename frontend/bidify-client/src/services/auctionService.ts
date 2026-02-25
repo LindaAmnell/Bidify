@@ -20,3 +20,26 @@ export const createAuction = (auction: {
     body: JSON.stringify(auction),
   });
 };
+
+export const updateAuction = (
+  id: number,
+  auction: {
+    title: string;
+    description: string;
+    startPrice: number;
+    imageUrl: string;
+    startDate: string;
+    endDate: string;
+  },
+) => {
+  const token = localStorage.getItem("token");
+
+  return api(`http://localhost:5215/api/auction/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(auction),
+  });
+};

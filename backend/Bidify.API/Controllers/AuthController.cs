@@ -1,8 +1,10 @@
 ﻿using Bidify.API.Core.Interfaces;
 using Bidify.API.Data.Interfaces;
 using Bidify.API.Dtos.UserDto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Bidify.API.Controllers
 {
@@ -73,6 +75,24 @@ namespace Bidify.API.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> Me()
+        {
+            var userId = int.Parse(
+                User.FindFirst(ClaimTypes.NameIdentifier)!.Value
+            );
 
+            var user = await _userRepo.GetByIdAsync(userId);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(new
+            {
+                userId = user.UserId,
+                username = user.Username
+            });
+        }
     }
 }

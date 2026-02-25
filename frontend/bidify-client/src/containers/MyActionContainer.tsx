@@ -13,9 +13,9 @@ const MyAuctionContainer = () => {
 
   return (
     <>
-      {form.isCreate && <AuctionForm />}
+      {(form.isCreate || form.auctionId) && <AuctionForm />}
 
-      {!form.isCreate && <Button onClick={openCreate} text="Create Auction" />}
+      <Button onClick={openCreate} text="Create Auction" />
 
       <AuctionList auctions={myAuctions} showOwnerActions />
     </>

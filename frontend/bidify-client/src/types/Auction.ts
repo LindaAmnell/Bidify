@@ -17,4 +17,6 @@ export type AuctionForm = {
   startPrice: string;
   imageUrl: string;
   isCreate: boolean;
+  auctionId?: number;
+  hasBids?: boolean;
 };

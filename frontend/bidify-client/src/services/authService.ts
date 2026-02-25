@@ -27,3 +27,13 @@ export const registerUser = (
     body: JSON.stringify({ username, password, email }),
   });
 };
+
+export const getMe = () => {
+  const token = localStorage.getItem("token");
+
+  return api("http://localhost:5215/api/auth/me", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

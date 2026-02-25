@@ -2,7 +2,9 @@ import { createContext, useEffect, useState, type ReactNode } from "react";
 import {
   loginUser as loginApi,
   registerUser as registerApi,
+  getMe,
 } from "../services/authService";
+
 import type { User } from "../types/user";
 
 type AuthContextType = {
@@ -25,17 +27,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    console.log("User changed:", user);
-  }, [user]);
+    const token = localStorage.getItem("token");
+
+    if (!token) return;
+
+    const loadUser = async () => {
+      try {
+        const user = await getMe();
+        setUser(user);
+      } catch {
+        localStorage.removeItem("token");
+        setUser(null);
+      }
+    };
+
+    loadUser();
+  }, []);
 
   const loginUser = async (username: string, password: string) => {
     const result = await loginApi(username, password);
 
-    console.log("LOGIN RESULT:", result);
-    console.log("TOKEN VALUE:", result.token);
-
     localStorage.setItem("token", String(result.token.token));
-
     setUser(result.user);
   };
 
@@ -51,8 +63,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("token");
     setUser(null);
   };
-  console.log("AuthContext user:", user);
-  console.log("isAuthenticated:", !!user);
 
   return (
     <AuthContext.Provider

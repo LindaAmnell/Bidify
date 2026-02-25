@@ -4,16 +4,26 @@ import "./AuctionForm.css";
 import { AuctionsContext } from "../../../context/AuctionContext";
 
 const AuctionForm = () => {
-  const { form, setForm, createAuction, closeCreate } =
+  const { form, setForm, createAuction, closeForm, updateAuction } =
     useContext(AuctionsContext);
+  const isEdit = !form.isCreate && form.auctionId;
+  const lockPrice = Boolean(isEdit && form.hasBids);
 
   const handleSubmit = async () => {
-    await createAuction({
+    const data = {
       title: form.title,
       description: form.description,
       startPrice: Number(form.startPrice),
       imageUrl: form.imageUrl,
-    });
+      startDate: new Date().toISOString(),
+      endDate: new Date().toISOString(),
+    };
+
+    if (isEdit) {
+      await updateAuction(form.auctionId!, data);
+    } else {
+      await createAuction(data);
+    }
   };
 
   return (
@@ -36,8 +46,9 @@ const AuctionForm = () => {
         />
         <label>Start price</label>
         <input
-          type="number"
+          type="text"
           value={form.startPrice}
+          disabled={lockPrice}
           onChange={(e) =>
             setForm((prev) => ({ ...prev, startPrice: e.target.value }))
           }
@@ -52,7 +63,7 @@ const AuctionForm = () => {
         />
         <div className="modal-buttons">
           <Button onClick={handleSubmit} text="Save" />
-          <Button onClick={closeCreate} text="Cancel" />
+          <Button onClick={closeForm} text="Cancel" />
         </div>
       </form>
     </section>
