@@ -17,11 +17,12 @@ const AuctionCard = ({
 }: Props) => {
   const { user } = useContext(AuthContext);
   const { openEdit } = useContext(AuctionsContext);
-
+  const isClosed = new Date(auction.endDate).getTime() <= Date.now();
   const isMyAuction = auction.userId === user?.userId;
 
   return (
-    <div className="auction-card open">
+    <div className={`auction-card ${isClosed ? "finished" : "open"}`}>
+      {isClosed && <div className="finished-badge">Finished</div>}
       <div className="image-placeholder">
         <img src={auction.imageUrl} />
       </div>
@@ -35,8 +36,9 @@ const AuctionCard = ({
       <div className="card-actions">
         {!isMyAuction && (
           <div className="bid-wrapper">
-            <AuctionsButton text="Bid" disabled={!user} />
+            <AuctionsButton text="Bid" disabled={!user || isClosed} />
             {!user && <small className="hint">Login to bid</small>}
+            {isClosed && <small> Finised</small>}
           </div>
         )}
         {!showOwnerActions && (

@@ -14,6 +14,7 @@ const AuctionsContainer = () => {
     console.log(id);
     navigate(`/inspectAuction/${id}`);
   };
+
   const filteredAuctions = auctions.filter((a) =>
     a.title.toLowerCase().includes(search.toLowerCase()),
   );

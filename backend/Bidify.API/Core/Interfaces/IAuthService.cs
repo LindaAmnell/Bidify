@@ -1,4 +1,4 @@
-﻿using Bidify.API.Dtos.AuthDto;
+﻿using Bidify.API.Dtos;
 
 namespace Bidify.API.Core.Interfaces
 {

@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import Button from "../../common/Buttons/Button";
+import Button from "../../../common/Buttons/Button";
 import "./AuctionForm.css";
-import { AuctionsContext } from "../../../context/AuctionContext";
+import { AuctionsContext } from "../../../../context/AuctionContext";
 
 const AuctionForm = () => {
   const { form, setForm, createAuction, closeForm, updateAuction } =

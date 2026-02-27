@@ -2,7 +2,7 @@
 using Bidify.API.Core.Interfaces;
 using Bidify.API.Data.Entities;
 using Bidify.API.Data.Interfaces;
-using Bidify.API.Dtos.AuthDto;
+using Bidify.API.Dtos;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -95,12 +95,11 @@ namespace Bidify.API.Core.Services
             );
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(
+                expires: DateTime.UtcNow.AddMinutes(
                     Convert.ToDouble(_configuration["Jwt:DurationInMinutes"])
                 ),
                 signingCredentials: creds

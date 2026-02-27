@@ -19,6 +19,7 @@ namespace Bidify.API.Data.Repo
             return await _context.Auctions
                 .Include(a => a.User)
                 .Include(a => a.Bids)
+                    .ThenInclude(b => b.User)
                 .FirstOrDefaultAsync(a => a.AuctionId == id);
         }
         public async Task<List<Auction>> GetAllAsync()

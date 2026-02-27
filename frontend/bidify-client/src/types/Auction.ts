@@ -1,3 +1,5 @@
+import type { Bid } from "./bids";
+
 export type Auction = {
   auctionId: number;
   title: string;
@@ -10,6 +12,7 @@ export type Auction = {
   isActive: boolean;
   userId: number;
   ownerName: string;
+  bids: Bid[];
 };
 
 export type AuctionForm = {

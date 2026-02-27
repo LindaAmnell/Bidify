@@ -1,51 +1,36 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import AuthForm from "../components/AuthForm/AuthForm";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const AuthContainer = () => {
   const { loginUser, registerUser } = useContext(AuthContext);
-
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [isRegister, setIsRegister] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    console.log("hej");
+  const handleLogin = async (username: string, password: string) => {
     try {
       await loginUser(username, password);
-      console.log(username);
+      console.log("då");
       navigate("/");
-    } catch (error) {
+    } catch {
       alert("Login failed");
     }
   };
 
-  const handleRegister = async () => {
+  const handleRegister = async (
+    username: string,
+    password: string,
+    email: string,
+  ) => {
     try {
       await registerUser(username, password, email);
-      setIsRegister(false);
-    } catch (error) {
+      navigate("/");
+    } catch {
       alert("Register failed");
     }
   };
 
-  return (
-    <AuthForm
-      username={username}
-      password={password}
-      email={email}
-      isRegister={isRegister}
-      setUsername={setUsername}
-      setPassword={setPassword}
-      setEmail={setEmail}
-      setIsRegister={setIsRegister}
-      onLogin={handleLogin}
-      onRegister={handleRegister}
-    />
-  );
+  return <AuthForm onLogin={handleLogin} onRegister={handleRegister} />;
 };
 
 export default AuthContainer;

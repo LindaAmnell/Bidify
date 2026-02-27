@@ -1,20 +1,24 @@
-﻿using Bidify.API.Data.Entities;
+﻿using Bidify.API.Core.Interfaces;
+using Bidify.API.Data.Entities;
 using Bidify.API.Data.Interfaces;
+using Bidify.API.Data.Repo;
+using Bidify.API.Dtos;
 
 namespace Bidify.API.Core.Services
 {
-    public class BidService
+    public class BidService : IBidService
     {
         private readonly IBidRepo _bidRepo;
         private readonly IAuctionRepo _auctionRepo;
+        private readonly IUserRepo _userRepo;
 
-        public BidService(IBidRepo bidRepo, IAuctionRepo auctionRepo)
+        public BidService(IBidRepo bidRepo, IAuctionRepo auctionRepo, IUserRepo userRepo)
         {
             _bidRepo = bidRepo;
             _auctionRepo = auctionRepo;
+            _userRepo = userRepo;
         }
-
-        public async Task<Bid> PlaceBidAsync(int auctionId, int userId, decimal bidAmount)
+        public async Task<BidDto> PlaceBidAsync(int auctionId, int userId, decimal bidAmount)
         {
             var auction = await _auctionRepo.GetByIdAsync(auctionId);
 
@@ -29,11 +33,16 @@ namespace Bidify.API.Core.Services
 
             var bids = await _bidRepo.GetByAuctionIdAsync(auctionId);
 
-            var highestBid = bids.Any()
-                ? bids.Max(b => b.BidAmount)
-                : auction.StartPrice;
+            var highestBidEntity = bids
+                .OrderByDescending(b => b.BidAmount)
+                .FirstOrDefault();
 
-            if (bidAmount <= highestBid)
+            var highestAmount = highestBidEntity?.BidAmount ?? auction.StartPrice;
+
+            if (highestBidEntity?.UserId == userId)
+                throw new InvalidOperationException("You already have the highest bid");
+
+            if (bidAmount <= highestAmount)
                 throw new InvalidOperationException("Bid must be higher than current highest bid");
 
             var bid = new Bid
@@ -47,7 +56,16 @@ namespace Bidify.API.Core.Services
             await _bidRepo.AddAsync(bid);
             await _bidRepo.SaveChangesAsync();
 
-            return bid;
+            var user = await _userRepo.GetByIdAsync(userId);
+
+            return new BidDto
+            {
+                Id = bid.Id,
+                BidAmount = bid.BidAmount,
+                BidDate = bid.BidDate,
+                UserId = bid.UserId,
+                Username = user.Username
+            };
         }
 
         public async Task DeleteAsync(int bidId, int userId)

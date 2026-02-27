@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import AuctionList from "../components/auctions/AuctionsList/AuctionsList";
-import AuctionForm from "../components/layout/popup/AuctionFrom";
+import AuctionForm from "../components/layout/popup/AuctionForm/AuctionFrom";
 import Button from "../components/common/Buttons/Button";
 import { AuctionsContext } from "../context/AuctionContext";
 import { AuthContext } from "../context/AuthContext";

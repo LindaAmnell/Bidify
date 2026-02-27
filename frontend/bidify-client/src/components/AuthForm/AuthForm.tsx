@@ -1,44 +1,46 @@
+import { useState } from "react";
 import Button from "../common/Buttons/Button";
 import "./AuthForm.css";
 
 type Props = {
-  username: string;
-  password: string;
-  email: string;
-  isRegister: boolean;
-  setUsername: (value: string) => void;
-  setPassword: (value: string) => void;
-  setEmail: (value: string) => void;
-  setIsRegister: (value: boolean) => void;
-  onLogin: () => void;
-  onRegister: () => void;
+  onLogin: (username: string, password: string) => Promise<void>;
+  onRegister: (
+    username: string,
+    password: string,
+    email: string,
+  ) => Promise<void>;
 };
+const AuthForm = ({ onLogin, onRegister }: Props) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [isRegister, setIsRegister] = useState(false);
 
-const AuthForm = ({
-  username,
-  password,
-  email,
-  isRegister,
-  setUsername,
-  setPassword,
-  setEmail,
-  setIsRegister,
-  onLogin,
-  onRegister,
-}: Props) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isRegister) {
+      await onRegister(username, password, email);
+    } else {
+      await onLogin(username, password);
+    }
+  };
+
   return (
     <section className="form-section">
-      {/* <h2>{isRegister ? "Register" : "Login"}</h2> */}
-
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <label>Username</label>
-        <input value={username} onChange={(e) => setUsername(e.target.value)} />
+        <input
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          autoComplete="username"
+        />
 
         <label>Password</label>
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete="current-password"
         />
 
         {isRegister && (
@@ -51,15 +53,17 @@ const AuthForm = ({
             />
           </>
         )}
-      </form>
 
-      <div className="btn-div">
-        {!isRegister && <Button text="Login" onClick={onLogin} />}
-        {isRegister && <Button text="Register" onClick={onRegister} />}
-        {!isRegister && (
-          <Button text="Create account" onClick={() => setIsRegister(true)} />
-        )}
-      </div>
+        <div className="btn-div">
+          <Button text={isRegister ? "Register" : "Login"} type="submit" />
+
+          <Button
+            text={isRegister ? "Already have an account?" : "Create account"}
+            type="button"
+            onClick={() => setIsRegister((prev) => !prev)}
+          />
+        </div>
+      </form>
     </section>
   );
 };

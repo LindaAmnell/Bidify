@@ -1,4 +1,6 @@
 ﻿using Bidify.API.Core.Interfaces;
+using Bidify.API.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -17,13 +19,31 @@ namespace Bidify.API.Controllers
             _bidService = bidService;
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Place(int auctionId, decimal bidAmount)
+        public async Task<IActionResult> Place([FromBody] PlaceBidDto dto)
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var bid = await _bidService.PlaceBidAsync(auctionId, userId, bidAmount);
-            return Ok(bid);
+            if (userIdClaim == null)
+                return Unauthorized();
+
+            try
+            {
+                var userId = int.Parse(userIdClaim);
+
+                var bid = await _bidService.PlaceBidAsync(
+                    dto.AuctionId,
+                    userId,
+                    dto.BidAmount
+                );
+
+                return Ok(bid);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]

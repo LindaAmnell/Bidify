@@ -2,7 +2,8 @@
 using Bidify.API.Data.Entities;
 using Bidify.API.Data.Interfaces;
 using Bidify.API.Data.Repo;
-using Bidify.API.Dtos.ActionDto;
+using Bidify.API.Dtos;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Bidify.API.Core.Services
@@ -103,9 +104,6 @@ namespace Bidify.API.Core.Services
 
             if (auction == null) return null;
 
-            var owner = await _userRepo.GetByIdAsync(auction.UserId);
-
-
             return new AuctionDto
             {
                 AuctionId = auction.AuctionId,
@@ -113,17 +111,30 @@ namespace Bidify.API.Core.Services
                 Description = auction.Description,
                 ImageUrl = auction.ImageUrl,
                 StartPrice = auction.StartPrice,
+
                 HighestBid = auction.Bids.Any()
                     ? auction.Bids.Max(b => b.BidAmount)
                     : auction.StartPrice,
+
                 StartDate = auction.StartDate,
                 EndDate = auction.EndDate,
                 IsActive = auction.IsActive,
                 UserId = auction.UserId,
-                OwnerName = owner.Username
-            };
 
-          
+                OwnerName = auction.User.Username,
+
+                Bids = auction.Bids
+                    .OrderByDescending(b => b.BidAmount)
+                    .Select(b => new BidDto
+                    {
+                        Id = b.Id,
+                        BidAmount = b.BidAmount,
+                        BidDate = b.BidDate,
+                        UserId = b.UserId,
+                        Username = b.User.Username
+                    })
+                    .ToList()
+            };
         }
     }
 

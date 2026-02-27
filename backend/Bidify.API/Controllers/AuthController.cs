@@ -1,6 +1,6 @@
 ﻿using Bidify.API.Core.Interfaces;
 using Bidify.API.Data.Interfaces;
-using Bidify.API.Dtos.UserDto;
+using Bidify.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

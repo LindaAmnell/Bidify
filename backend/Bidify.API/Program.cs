@@ -27,7 +27,9 @@ builder.Services.AddDbContext<BidifyDbContext>(options =>
 );
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IAuctionRepo, AuctionRepo>();
+
 builder.Services.AddScoped<IBidRepo, BidRepo>();
+builder.Services.AddScoped<IBidService, BidService>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();

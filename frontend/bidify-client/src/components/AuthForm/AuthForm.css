@@ -28,5 +28,5 @@ input {
 .btn-div {
   display: flex;
   flex-direction: column;
-  gap: 1.5em;
+  margin-top: 1em;
 }

@@ -13,6 +13,7 @@ type AuctionsContextType = {
 
   inspectAuction: (id: number) => Promise<void>;
   inspectedAuction: Auction | null;
+  setInspectedAuction: React.Dispatch<React.SetStateAction<Auction | null>>;
 
   createAuction: (auction: {
     title: string;
@@ -58,7 +59,7 @@ export const AuctionsProvider = ({ children }: { children: ReactNode }) => {
     isCreate: false,
   });
 
-  // 🔹 FETCH
+  // 🔹 FETCH ALL
   const fetchAuctions = async () => {
     try {
       const data = await getAllAuctions();
@@ -68,10 +69,10 @@ export const AuctionsProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // 🔹 FETCH ONE
   const inspectAuction = async (id: number) => {
     try {
       const auction = await getAuctionById(id);
-      console.log(auction);
       setInspectedAuction(auction);
     } catch (error) {
       console.error(error);
@@ -145,6 +146,7 @@ export const AuctionsProvider = ({ children }: { children: ReactNode }) => {
       hasBids: auction.highestBid > auction.startPrice,
     });
   };
+
   const closeForm = () => {
     setForm({
       title: "",
@@ -175,6 +177,7 @@ export const AuctionsProvider = ({ children }: { children: ReactNode }) => {
         closeForm,
         inspectedAuction,
         inspectAuction,
+        setInspectedAuction,
       }}>
       {children}
     </AuctionsContext.Provider>

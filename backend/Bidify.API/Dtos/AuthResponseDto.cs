@@ -1,4 +1,4 @@
-﻿namespace Bidify.API.Dtos.AuthDto
+﻿namespace Bidify.API.Dtos
 {
     public class AuthResponseDto
     {

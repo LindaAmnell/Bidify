@@ -1,6 +1,6 @@
 ﻿using Bidify.API.Core.Interfaces;
 using Bidify.API.Data.Entities;
-using Bidify.API.Dtos.ActionDto;
+using Bidify.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
