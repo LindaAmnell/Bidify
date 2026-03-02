@@ -42,16 +42,12 @@ namespace Bidify.API.Core.Services
                 .ToList();
         }
 
-        public async Task DeactivateAsync(int auctionId, int userId)
+        public async Task DeactivateAsync(int auctionId)
         {
             var auction = await _auctionRepo.GetByIdAsync(auctionId);
 
             if (auction == null)
                 throw new InvalidOperationException("Auction not found");
-
-            
-            if (auction.UserId != userId)
-                throw new UnauthorizedAccessException("Not allowed");
 
             auction.IsActive = false;
 

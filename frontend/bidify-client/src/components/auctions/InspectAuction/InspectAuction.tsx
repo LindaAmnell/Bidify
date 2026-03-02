@@ -1,29 +1,34 @@
 import { useContext, useState } from "react";
 import { AuctionsContext } from "../../../context/AuctionContext";
 import "./InspectAuction.css";
-
 import Button from "../../common/Buttons/Button";
 import { AuthContext } from "../../../context/AuthContext";
-import { placeBid } from "../../../services/bidService";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   onShowBids: () => void;
+  onPlaceBid: (amount: number) => Promise<void> | void;
+  message: string;
+  clearMessage: () => void;
 }
 
-const InspectAuction = ({ onShowBids }: Props) => {
-  const { inspectedAuction, setInspectedAuction, fetchAuctions } =
-    useContext(AuctionsContext);
+const InspectAuction = ({
+  onShowBids,
+  onPlaceBid,
+  message,
+  clearMessage,
+}: Props) => {
+  const { inspectedAuction } = useContext(AuctionsContext);
   const { user } = useContext(AuthContext);
   const [showBidInput, setShowBidInput] = useState(false);
   const [bidAmount, setBidAmount] = useState("");
+  const navigate = useNavigate();
 
   if (!inspectedAuction) {
     return <p>Loading...</p>;
   }
   const isMyAuction = inspectedAuction.ownerName === user?.username;
-
   const auction = inspectedAuction;
-
   const isClosed = new Date(auction.endDate).getTime() <= Date.now();
 
   const bidHandler = async () => {
@@ -31,37 +36,18 @@ const InspectAuction = ({ onShowBids }: Props) => {
       setShowBidInput(true);
       return;
     }
+
     const amount = Number(bidAmount);
-
-    if (!amount || amount <= auction.highestBid) {
-      alert("Bid must be higher than current highest bid");
-      return;
-    }
-
-    if (user?.username)
-      try {
-        const newBid = await placeBid(auction.auctionId, amount);
-        setInspectedAuction((prev) =>
-          prev
-            ? {
-                ...prev,
-                highestBid: newBid.bidAmount,
-                bids: [newBid, ...prev.bids],
-              }
-            : prev,
-        );
-
-        setShowBidInput(false);
-        setBidAmount("");
-        fetchAuctions();
-      } catch (error: any) {
-        alert(error.message);
-      }
+    await onPlaceBid(amount);
+    setBidAmount("");
   };
 
   return (
     <>
       <section className="auction-section">
+        <button className="back-btn" onClick={() => navigate(-1)}>
+          ✕
+        </button>
         <h3>{auction?.title}</h3>
         <div className="inspected-info">
           <div className="image-auction">
@@ -100,12 +86,18 @@ const InspectAuction = ({ onShowBids }: Props) => {
 
                 <div className="bid-btn">
                   {showBidInput && (
-                    <input
-                      type="number"
-                      placeholder="Bid amount"
-                      value={bidAmount}
-                      onChange={(e) => setBidAmount(e.target.value)}
-                    />
+                    <>
+                      {message && <p className="error-massage">{message}</p>}
+                      <input
+                        type="number"
+                        placeholder="Bid amount"
+                        value={bidAmount}
+                        onChange={(e) => {
+                          setBidAmount(e.target.value);
+                          clearMessage();
+                        }}
+                      />
+                    </>
                   )}
 
                   <Button
@@ -113,6 +105,7 @@ const InspectAuction = ({ onShowBids }: Props) => {
                     text={showBidInput ? "Place Bid" : "Bid"}
                     onClick={bidHandler}
                   />
+                  {!user && <small className="hint">Login to bid</small>}
                 </div>
               </>
             )}

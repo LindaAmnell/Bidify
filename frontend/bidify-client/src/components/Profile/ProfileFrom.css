@@ -1,0 +1,16 @@
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  color: white;
+}
+
+.profile-form input {
+  color: black;
+}
+
+label {
+  display: flex;
+  color: white;
+  margin-top: 0.6em;
+}

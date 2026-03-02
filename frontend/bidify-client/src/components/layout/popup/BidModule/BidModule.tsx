@@ -5,9 +5,10 @@ import "./BidModule.css";
 
 interface Props {
   onClose: () => void;
+  onDeleteBid: (bidId: number) => void;
 }
 
-const BidModule = ({ onClose }: Props) => {
+const BidModule = ({ onClose, onDeleteBid }: Props) => {
   const { inspectedAuction } = useContext(AuctionsContext);
 
   if (!inspectedAuction) return null;
@@ -21,13 +22,8 @@ const BidModule = ({ onClose }: Props) => {
 
         <h2>Bid history</h2>
 
-        <div className="bid-header-row">
-          <p>Bid</p>
-          <p>Bidder</p>
-          <p>Time</p>
-        </div>
-
-        <BidCardList bids={inspectedAuction.bids} />
+        <hr className="bid-divider" />
+        <BidCardList bids={inspectedAuction.bids} onDeleteBid={onDeleteBid} />
       </div>
     </div>
   );

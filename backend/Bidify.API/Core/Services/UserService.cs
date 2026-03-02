@@ -37,6 +37,21 @@ namespace Bidify.API.Core.Services
             await _userRepo.SaveChangesAsync();
         }
 
+        public async Task UpdatePasswordAsync(int userId, string newPassword)
+        {
+            var user = await _userRepo.GetByIdAsync(userId);
+
+            if (user == null)
+                throw new InvalidOperationException("User not found");
+
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
+
+            user.PasswordHash = hashedPassword;
+
+            _userRepo.Update(user);
+            await _userRepo.SaveChangesAsync();
+        }
+
 
     }
 }

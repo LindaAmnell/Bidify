@@ -4,3 +4,16 @@ export const getUserById = async (id?: number) => {
   api(`http://localhost:5215/api/user/${id}`);
   console.log(id);
 };
+
+export const updatePassword = (newPassword: string) => {
+  const token = localStorage.getItem("token");
+
+  return api("http://localhost:5215/api/user/password", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ newPassword }),
+  });
+};

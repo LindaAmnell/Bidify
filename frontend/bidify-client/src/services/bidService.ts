@@ -20,3 +20,14 @@ export const placeBid = (
     }),
   });
 };
+
+export const deleteBid = (bidId: number): Promise<void> => {
+  const token = localStorage.getItem("token");
+
+  return api(`http://localhost:5215/api/bid/${bidId}`, {
+    method: "DELETE",
+    headers: {
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
+  });
+};

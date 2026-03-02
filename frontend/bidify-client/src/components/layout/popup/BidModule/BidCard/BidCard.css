@@ -1,5 +1,36 @@
 .bid-card {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bid-top {
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.bid-amount {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.bid-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #666;
+}
+
+.delete-btn {
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+  background-color: rgb(192, 130, 130);
 }

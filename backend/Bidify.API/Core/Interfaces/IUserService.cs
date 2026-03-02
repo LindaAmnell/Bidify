@@ -12,5 +12,7 @@ namespace Bidify.API.Core.Interfaces
 
         Task DeactivateAsync(int userId);
 
+        Task UpdatePasswordAsync(int userId, string newPassword);
+
     }
 }

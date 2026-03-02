@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
         const user = await getMe();
         setUser(user);
+        console.log(user);
       } catch {
         localStorage.removeItem("token");
         setUser(null);
@@ -48,6 +49,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const result = await loginApi(username, password);
 
     localStorage.setItem("token", String(result.token.token));
+    console.log(result.user);
     setUser(result.user);
   };
 

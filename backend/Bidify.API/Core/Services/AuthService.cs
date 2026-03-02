@@ -53,7 +53,8 @@ namespace Bidify.API.Core.Services
             {
                 Token = token,
                 UserId = user.UserId,
-                Username = user.Username
+                Username = user.Username,
+                Role = user.Role.ToString()
             };
         }
 
@@ -77,7 +78,8 @@ namespace Bidify.API.Core.Services
             {
                 Token = token,
                 UserId = user.UserId,
-                Username = user.Username
+                Username = user.Username,
+                Role = user.Role.ToString()
             };
         }
 

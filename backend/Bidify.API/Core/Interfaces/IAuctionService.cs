@@ -14,7 +14,7 @@ namespace Bidify.API.Core.Interfaces
 
         Task<AuctionDto?> GetByIdAsync(int auctionId);
 
-        Task DeactivateAsync(int auctionId, int userId);
+        Task DeactivateAsync(int auctionId);
         Task UpdateOwnAuctionAsync(int auctionId, int userId, Auction updatedAuction);
     }
 }

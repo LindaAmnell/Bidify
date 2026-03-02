@@ -33,6 +33,12 @@ const Navbar = () => {
             Login
           </Link>
         )}
+        {isAuthenticated && (
+          <Link onClick={() => setIsOpen(false)} to="/profile">
+            Profile
+          </Link>
+        )}
+        {user?.role === "Admin" && <Link to="/admin">Admin</Link>}
 
         {isAuthenticated && (
           <>

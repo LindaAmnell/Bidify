@@ -63,7 +63,14 @@ export const AuctionsProvider = ({ children }: { children: ReactNode }) => {
   const fetchAuctions = async () => {
     try {
       const data = await getAllAuctions();
-      setAuctions(data);
+      const sorted = data.sort((a, b) => {
+        const aClosed = new Date(a.endDate).getTime() <= Date.now();
+        const bClosed = new Date(b.endDate).getTime() <= Date.now();
+
+        return Number(aClosed) - Number(bClosed);
+      });
+
+      setAuctions(sorted);
     } catch (error) {
       console.error(error);
     }

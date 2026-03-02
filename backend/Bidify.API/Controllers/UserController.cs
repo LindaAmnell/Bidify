@@ -1,6 +1,9 @@
 ﻿using Bidify.API.Core.Interfaces;
+using Bidify.API.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Bidify.API.Controllers
 {
@@ -22,6 +25,7 @@ namespace Bidify.API.Controllers
             return Ok(users);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}/deactivate")]
         public async Task<IActionResult> Deactivate(int id)
         {
@@ -35,6 +39,17 @@ namespace Bidify.API.Controllers
             var username = await _userService.GetByIdAsync(id);
 
             return Ok(username);
+        }
+
+        [Authorize]
+        [HttpPut("password")]
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordDto dto)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            await _userService.UpdatePasswordAsync(userId, dto.NewPassword);
+
+            return NoContent();
         }
 
     }

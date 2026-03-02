@@ -73,12 +73,11 @@ namespace Bidify.API.Controllers
         }
 
         // 🔹 DEACTIVATE
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}/deactivate")]
         public async Task<IActionResult> Deactivate(int id)
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            await _auctionService.DeactivateAsync(id, userId);
+            await _auctionService.DeactivateAsync(id);
             return NoContent();
         }
 

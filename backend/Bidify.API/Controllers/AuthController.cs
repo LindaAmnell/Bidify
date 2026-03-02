@@ -1,9 +1,11 @@
-﻿using Bidify.API.Core.Interfaces;
+﻿using Bidify.API.Core.Enum;
+using Bidify.API.Core.Interfaces;
 using Bidify.API.Data.Interfaces;
 using Bidify.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Security.Claims;
 
 namespace Bidify.API.Controllers
@@ -64,8 +66,12 @@ namespace Bidify.API.Controllers
                     token,
                     user = new
                     {
+                       
                         userId = user.UserId,
-                        username = user.Username
+                        username = user.Username,
+                        email = user.Email,
+                        role = user.Role.ToString()
+
                     }
                 });
             }

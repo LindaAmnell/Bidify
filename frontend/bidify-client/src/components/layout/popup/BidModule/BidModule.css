@@ -11,10 +11,10 @@
 
 .bid-modal-content {
   background: white;
-  width: 20em;
+  width: 22em;
   max-height: 80vh;
   overflow-y: auto;
-  padding: 1em;
+  padding: 1.5em;
   border-radius: 12px;
   position: relative;
 }
@@ -29,12 +29,8 @@
   cursor: pointer;
 }
 
-.bid-header-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-weight: bold;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 0.5em;
-  margin-bottom: 0.5em;
+.bid-divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 12px 0;
 }

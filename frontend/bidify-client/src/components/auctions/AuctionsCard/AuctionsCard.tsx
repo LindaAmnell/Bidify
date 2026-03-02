@@ -10,6 +10,7 @@ type Props = {
   showOwnerActions?: boolean;
   onInspect?: (id: number) => void;
 };
+
 const AuctionCard = ({
   auction,
   onInspect,
@@ -17,41 +18,38 @@ const AuctionCard = ({
 }: Props) => {
   const { user } = useContext(AuthContext);
   const { openEdit } = useContext(AuctionsContext);
+
   const isClosed = new Date(auction.endDate).getTime() <= Date.now();
   const isMyAuction = auction.userId === user?.userId;
 
   return (
     <div className={`auction-card ${isClosed ? "finished" : "open"}`}>
       {isClosed && <div className="finished-badge">Finished</div>}
+
       <div className="image-placeholder">
-        <img src={auction.imageUrl} />
+        <img src={auction.imageUrl} alt={auction.title} />
       </div>
 
       <div className="info-div">
         <h3>{auction.title}</h3>
-        <p>{new Date(auction.endDate).toLocaleDateString("sv-SE")}</p>
-        <p>{auction.highestBid} SEK</p>
+        <p>
+          {isClosed ? "Ended:" : "Ends:"}{" "}
+          {new Date(auction.endDate).toLocaleDateString("sv-SE")}
+        </p>
+        <p className="price">
+          {isClosed ? "Winning bid:" : "Current bid:"} {auction.highestBid} SEK
+        </p>
       </div>
 
       <div className="card-actions">
-        {!isMyAuction && (
-          <div className="bid-wrapper">
-            <AuctionsButton text="Bid" disabled={!user || isClosed} />
-            {!user && <small className="hint">Login to bid</small>}
-            {isClosed && <small> Finised</small>}
-          </div>
-        )}
-        {!showOwnerActions && (
-          <AuctionsButton
-            onClick={() => onInspect?.(auction.auctionId)}
-            text="Inspect"
-          />
-        )}
+        <AuctionsButton
+          onClick={() => onInspect?.(auction.auctionId)}
+          text={"Inspect"}
+        />
       </div>
 
-      {showOwnerActions && isMyAuction && (
+      {showOwnerActions && isMyAuction && !isClosed && (
         <div className="card-actions">
-          <AuctionsButton text="Delete" />
           <AuctionsButton onClick={() => openEdit(auction)} text="Change" />
         </div>
       )}
