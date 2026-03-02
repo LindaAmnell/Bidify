@@ -1,4 +1,5 @@
 ﻿using Bidify.API.Data.Entities;
+using Bidify.API.Dtos;
 
 namespace Bidify.API.Data.Interfaces
 {
@@ -6,9 +7,7 @@ namespace Bidify.API.Data.Interfaces
     {
 
         Task<Auction?> GetByIdAsync(int id);
-
-        Task<List<Auction>> GetAllAsync();
-
+        Task<List<AuctionDto>> GetAllAsync();
         Task<List<Auction>> SearchAsync(string title);
 
         Task<List<Auction>> GetByUserIdAsync(int userId);

@@ -6,7 +6,7 @@ namespace Bidify.API.Core.Interfaces
     public interface IUserService
     {
 
-        Task<List<User>> GetAllAsync();
+        Task<List<UserDto>> GetAllAsync();
 
         Task<User?> GetByIdAsync(int userId);
 

@@ -1,5 +1,6 @@
 ﻿using Bidify.API.Data.Entities;
 using Bidify.API.Data.Interfaces;
+using Bidify.API.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bidify.API.Data.Repo
@@ -32,9 +33,17 @@ namespace Bidify.API.Data.Repo
                  .FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public async Task<List<User>> GetAllAsync()
+        public async Task<List<UserDto>> GetAllAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Select(u => new UserDto
+                {
+                    UserId = u.UserId,
+                    Username = u.Username,
+                    IsActive = u.IsActive,
+                    Role = u.Role.ToString()
+                })
+                .ToListAsync();
         }
 
 

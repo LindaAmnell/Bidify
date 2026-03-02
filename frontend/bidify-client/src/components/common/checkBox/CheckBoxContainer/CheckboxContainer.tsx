@@ -1,46 +1,27 @@
 import Checkbox from "../Checkbox";
 import "./CheckBoxContainer.css";
 
-interface Props {
-  showOpen: boolean;
-  showClosed: boolean;
-  setShowOpen: (value: boolean) => void;
-  setShowClosed: (value: boolean) => void;
+interface Option {
+  label: string;
+  checked: boolean;
+  onChange: () => void;
 }
 
-const CheckboxContainer = ({
-  showOpen,
-  showClosed,
-  setShowOpen,
-  setShowClosed,
-}: Props) => {
-  const handleOpenChange = () => {
-    if (showOpen) {
-      setShowOpen(false);
-    } else {
-      setShowOpen(true);
-      setShowClosed(false);
-    }
-  };
+interface Props {
+  options: Option[];
+}
 
-  const handleClosedChange = () => {
-    if (showClosed) {
-      setShowClosed(false);
-    } else {
-      setShowClosed(true);
-      setShowOpen(false);
-    }
-  };
-
+const CheckboxContainer = ({ options }: Props) => {
   return (
     <div className="check-div">
-      <Checkbox label="Open" checked={showOpen} onChange={handleOpenChange} />
-
-      <Checkbox
-        label="Closed"
-        checked={showClosed}
-        onChange={handleClosedChange}
-      />
+      {options.map((option, index) => (
+        <Checkbox
+          key={index}
+          label={option.label}
+          checked={option.checked}
+          onChange={option.onChange}
+        />
+      ))}
     </div>
   );
 };

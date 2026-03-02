@@ -63,14 +63,11 @@ namespace Bidify.API.Core.Services
         {
             var user = await _userRepo.GetByUsernameAsync(username);
 
-            if (user == null)
-                throw new InvalidOperationException("Invalid credentials");
-
-            if (!user.IsActive)
-                throw new InvalidOperationException("Account is deactivated");
+            if (user == null || !user.IsActive)
+                throw new UnauthorizedAccessException("Invalid credentials");
 
             if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
-                throw new InvalidOperationException("Invalid credentials");
+                throw new UnauthorizedAccessException("Invalid credentials");
 
             var token = GenerateToken(user);
 

@@ -1,5 +1,6 @@
-import AdminAuctionCard from "../AdminAuctionCard/AdminAuctionCard";
 import type { Auction } from "../../../types/Auction";
+import AdminCard from "../AdminAuctionCard/AdminCard";
+import "./AdminList.css";
 
 type Props = {
   auctions: Auction[];
@@ -12,14 +13,31 @@ const AdminAuctionList = ({ auctions, onDeactivate }: Props) => {
   }
 
   return (
-    <div className="admin-auction-list">
-      {auctions.map((auction) => (
-        <AdminAuctionCard
-          key={auction.auctionId}
-          auction={auction}
-          onDeactivate={onDeactivate}
-        />
-      ))}
+    <div className="admin-list">
+      {auctions.map((auction) => {
+        const isClosed = new Date(auction.endDate).getTime() <= Date.now();
+
+        return (
+          <AdminCard
+            key={auction.auctionId}
+            title={auction.title}
+            subtitle={`Seller: ${auction.ownerName}`}
+            status={auction.isActive ? "Active" : "Inactive"}
+            isActive={auction.isActive}
+            extraInfo={
+              isClosed ? (
+                <p>Finished</p>
+              ) : (
+                <p>
+                  Ends: {new Date(auction.endDate).toLocaleDateString("sv-SE")}
+                </p>
+              )
+            }
+            onAction={() => onDeactivate(auction.auctionId)}
+            actionLabel="Inactivate"
+          />
+        );
+      })}
     </div>
   );
 };

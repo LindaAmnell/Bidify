@@ -1,6 +1,7 @@
 ﻿using Bidify.API.Core.Interfaces;
 using Bidify.API.Data.Entities;
 using Bidify.API.Data.Interfaces;
+using Bidify.API.Dtos;
 
 namespace Bidify.API.Core.Services
 {
@@ -13,12 +14,10 @@ namespace Bidify.API.Core.Services
         {
             _userRepo = userRepo;
         }
-
-        public async Task<List<User>> GetAllAsync()
+        public async Task<List<UserDto>> GetAllAsync()
         {
             return await _userRepo.GetAllAsync();
         }
-
         public async Task<User?> GetByIdAsync(int userId)
         {
             return await _userRepo.GetByIdAsync(userId);

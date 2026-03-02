@@ -33,15 +33,6 @@ namespace Bidify.API.Core.Services
             return auction;
         }
 
-        public async Task<List<Auction>> GetAllOpenAsync()
-        {
-            var auctions = await _auctionRepo.GetAllAsync();
-
-            return auctions
-                .Where(a => a.IsActive && a.EndDate > DateTime.UtcNow)
-                .ToList();
-        }
-
         public async Task DeactivateAsync(int auctionId)
         {
             var auction = await _auctionRepo.GetByIdAsync(auctionId);
@@ -55,19 +46,12 @@ namespace Bidify.API.Core.Services
             await _auctionRepo.SaveChangesAsync();
         }
 
-        public async Task<List<Auction>> GetAllAsync()
+        public async Task<List<AuctionDto>> GetAllAsync()
         {
             return await _auctionRepo.GetAllAsync();
         }
 
-        public async Task<List<Auction>> GetAllClosedAsync()
-        {
-            var auctions = await _auctionRepo.GetAllAsync();
-
-            return auctions
-                .Where(a => a.IsActive && a.EndDate <= DateTime.UtcNow)
-                .ToList();
-        }
+ 
 
         public async Task UpdateOwnAuctionAsync(int auctionId, int userId, Auction updatedAuction)
         {

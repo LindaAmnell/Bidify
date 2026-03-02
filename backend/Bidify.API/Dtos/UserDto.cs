@@ -2,8 +2,9 @@
 {
     public class UserDto
     {
-        public int userId { get; set; }
-        public string userName { get; set; }
-
+        public int UserId { get; set; }
+        public string Username { get; set; } = "";
+        public bool IsActive { get; set; }
+        public string Role { get; set; } = "";
     }
 }

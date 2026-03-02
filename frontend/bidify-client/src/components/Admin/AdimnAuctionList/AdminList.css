@@ -1,0 +1,8 @@
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 20em;
+  place-self: center;
+  margin-top: 1em;
+}

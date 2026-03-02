@@ -8,9 +8,7 @@ namespace Bidify.API.Core.Interfaces
     {
         Task<Auction> CreateAsync(Auction auction);
 
-        Task<List<Auction>> GetAllAsync();         
-        Task<List<Auction>> GetAllOpenAsync();
-        Task<List<Auction>> GetAllClosedAsync();
+        Task<List<AuctionDto>> GetAllAsync();
 
         Task<AuctionDto?> GetByIdAsync(int auctionId);
 

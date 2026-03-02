@@ -23,40 +23,6 @@ namespace Bidify.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var auctions = await _auctionService.GetAllAsync();
-
-            var result = auctions.Select(a => new AuctionDto
-            {
-                AuctionId = a.AuctionId,
-                Title = a.Title,
-                Description = a.Description,
-                ImageUrl = a.ImageUrl,
-                StartPrice = a.StartPrice,
-                HighestBid = a.Bids.Any()
-                    ? a.Bids.Max(b => b.BidAmount)
-                    : a.StartPrice,
-                StartDate = a.StartDate,
-                EndDate = a.EndDate,
-                IsActive = a.IsActive,
-                UserId = a.UserId
-            });
-
-            return Ok(result);
-        }
-
-
-        // 🔹 GET OPEN
-        [HttpGet("open")]
-        public async Task<IActionResult> GetOpen()
-        {
-            var auctions = await _auctionService.GetAllOpenAsync();
-            return Ok(auctions);
-        }
-
-        // 🔹 GET CLOSED
-        [HttpGet("closed")]
-        public async Task<IActionResult> GetClosed()
-        {
-            var auctions = await _auctionService.GetAllClosedAsync();
             return Ok(auctions);
         }
 
