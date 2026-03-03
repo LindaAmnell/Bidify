@@ -24,7 +24,7 @@ const AuctionCard = ({
 
   return (
     <div className={`auction-card ${isClosed ? "finished" : "open"}`}>
-      {isClosed && <div className="finished-badge">Finished</div>}
+      <div className="finished-badge">{isClosed && <p>Finished</p>}</div>
 
       <div className="image-placeholder">
         <img src={auction.imageUrl} alt={auction.title} />

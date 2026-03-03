@@ -65,7 +65,7 @@ const InspectContainer = () => {
   };
 
   return (
-    <>
+    <section className="auction-main">
       <InspectAuction
         onShowBids={() => setShowBids(true)}
         onPlaceBid={handlePlaceBid}
@@ -79,7 +79,7 @@ const InspectContainer = () => {
           onDeleteBid={handleDeleteBid}
         />
       )}
-    </>
+    </section>
   );
 };
 

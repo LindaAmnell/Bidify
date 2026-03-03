@@ -1,8 +1,13 @@
 .admin-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1em;
-  width: 20em;
   place-self: center;
-  margin-top: 1em;
+  margin-top: 2em;
+}
+
+@media (min-width: 1000px) {
+  .admin-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

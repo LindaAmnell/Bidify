@@ -3,6 +3,9 @@
   padding: 1em;
   border-radius: 8px;
   background: rgb(218, 214, 214);
+  width: 20em;
+  align-self: center;
+  height: 13em;
 }
 
 .danger-btn {

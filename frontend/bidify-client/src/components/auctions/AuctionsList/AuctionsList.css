@@ -1,8 +1,25 @@
 .auction-grid {
   display: grid;
-  grid-template-columns: repeat((1fr));
+  grid-template-columns: 1fr;
   gap: 1.5em;
-  margin-top: 1em;
-  place-items: center;
-  padding-bottom: 2em;
+  margin: 2em 5em;
+  padding: 0 2em;
+}
+
+@media (min-width: 768px) {
+  .auction-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .auction-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1600px) {
+  .auction-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

@@ -1,11 +1,12 @@
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
 import "./Navbar.css";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, logout, user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   return (
     <header className="navbar">
@@ -18,42 +19,72 @@ const Navbar = () => {
       </div>
 
       <nav className={`nav-links ${isOpen ? "open" : ""}`}>
-        <Link onClick={() => setIsOpen(false)} to="/">
+        <NavLink
+          to="/"
+          end
+          onClick={() => setIsOpen(false)}
+          className={({ isActive }) => (isActive ? "active" : "")}>
           Auctions
-        </Link>
-
+        </NavLink>
         {isAuthenticated && (
-          <Link onClick={() => setIsOpen(false)} to="/myAuction">
+          <NavLink
+            to="/myAuction"
+            onClick={() => setIsOpen(false)}
+            className={({ isActive }) => (isActive ? "active" : "")}>
             My auctions
-          </Link>
+          </NavLink>
         )}
-
         {!isAuthenticated && (
-          <Link onClick={() => setIsOpen(false)} to="/login">
+          <NavLink
+            to="/login"
+            onClick={() => setIsOpen(false)}
+            className={({ isActive }) => (isActive ? "active" : "")}>
             Login
-          </Link>
+          </NavLink>
         )}
         {isAuthenticated && (
-          <Link onClick={() => setIsOpen(false)} to="/profile">
+          <NavLink
+            to="/profile"
+            onClick={() => setIsOpen(false)}
+            className={({ isActive }) => (isActive ? "active" : "")}>
             Profile
-          </Link>
+          </NavLink>
         )}
-        {user?.role === "Admin" && <Link to="/admin">Admin</Link>}
-
+        {user?.role === "Admin" && (
+          <NavLink
+            to="/admin"
+            onClick={() => setIsOpen(false)}
+            className={({ isActive }) => (isActive ? "active" : "")}>
+            Admin
+          </NavLink>
+        )}
         {isAuthenticated && (
-          <>
-            <span className="nav-user">Hi {user?.username}</span>
-            <button
-              className="logout-btn"
-              onClick={() => {
-                logout();
-                setIsOpen(false);
-              }}>
-              Logout
-            </button>
-          </>
+          <NavLink
+            to="/"
+            onClick={() => {
+              logout();
+              navigate("/");
+              setIsOpen(false);
+            }}
+            className="mobile-logout">
+            Logout
+          </NavLink>
         )}
       </nav>
+
+      {isAuthenticated && (
+        <div className="nav-right">
+          <button
+            className="logout-btn"
+            onClick={() => {
+              logout();
+              navigate("/");
+              setIsOpen(false);
+            }}>
+            Logout
+          </button>
+        </div>
+      )}
     </header>
   );
 };

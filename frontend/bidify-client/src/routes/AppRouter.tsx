@@ -12,7 +12,14 @@ const AppRouter = () => {
     <Routes>
       <Route path="/" element={<AuctionsPage />} />
       <Route path="/login" element={<AuthPage />} />
-      <Route path="/profile" element={<ProfilePage />} />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/inspectAuction/:id" element={<InspectAuctionPage />} />
       <Route
         path="/myAuction"

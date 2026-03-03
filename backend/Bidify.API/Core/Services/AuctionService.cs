@@ -65,8 +65,8 @@ namespace Bidify.API.Core.Services
 
             auction.Title = updatedAuction.Title;
             auction.Description = updatedAuction.Description;
-            auction.StartDate = updatedAuction.StartDate;
-            auction.EndDate = updatedAuction.EndDate;
+            //auction.StartDate = updatedAuction.StartDate;
+            //auction.EndDate = updatedAuction.EndDate;
             auction.ImageUrl = updatedAuction.ImageUrl;
 
             if (!auction.Bids.Any())

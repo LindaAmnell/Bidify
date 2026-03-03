@@ -12,16 +12,17 @@ const MyAuctionContainer = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const myAuctions = auctions.filter((a) => a.userId === user?.userId);
+  const myAuctions = auctions
+    .filter((a) => a.userId === user?.userId)
+    .filter((a) => a.isActive);
 
   const handleInspect = async (id: number) => {
     await inspectAuction(id);
-    console.log(id);
     navigate(`/inspectAuction/${id}`);
   };
 
   return (
-    <>
+    <section className="auction-main">
       {(form.isCreate || form.auctionId) && <AuctionForm />}
 
       <Button onClick={openCreate} text="Create Auction" />
@@ -31,7 +32,7 @@ const MyAuctionContainer = () => {
         showOwnerActions
         onInspect={handleInspect}
       />
-    </>
+    </section>
   );
 };
 

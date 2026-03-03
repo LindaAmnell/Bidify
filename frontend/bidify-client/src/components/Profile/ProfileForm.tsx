@@ -43,7 +43,7 @@ const ProfileForm = () => {
 
   return (
     <div className="profile-form">
-      <h2>Profile</h2>
+      <h1>Profile</h1>
 
       <div>
         <label>Username</label>

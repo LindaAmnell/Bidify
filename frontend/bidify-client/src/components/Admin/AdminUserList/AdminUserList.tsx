@@ -12,9 +12,11 @@ const AdminUserList = ({ users, onDeactivate }: Props) => {
     return <p>No users found</p>;
   }
 
+  const userList = users.filter((user) => user.role !== "Admin");
+
   return (
     <div className="admin-list">
-      {users.map((user) => (
+      {userList.map((user) => (
         <AdminCard
           key={user.userId}
           title={user.username}

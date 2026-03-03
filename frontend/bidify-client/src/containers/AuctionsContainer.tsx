@@ -26,12 +26,11 @@ const AuctionsContainer = () => {
     });
   const handleInspect = async (id: number) => {
     await inspectAuction(id);
-    console.log(id);
     navigate(`/inspectAuction/${id}`);
   };
 
   return (
-    <>
+    <section className="auction-main">
       <SearchBar onSearch={setSearch} />
       <CheckboxContainer
         options={[
@@ -62,7 +61,7 @@ const AuctionsContainer = () => {
         ]}
       />
       <AuctionList onInspect={handleInspect} auctions={filteredAuctions} />
-    </>
+    </section>
   );
 };
 

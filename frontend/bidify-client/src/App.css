@@ -10,3 +10,11 @@ body {
   color: rgb(184, 85, 85);
   padding-bottom: 0.4em;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+.auction-main {
+  place-items: center;
+}
