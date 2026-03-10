@@ -1,7 +1,5 @@
 # Bidify
 
-🚧 **Project under development**
-
 Bidify is a fullstack auction platform built with:
 
 - ASP.NET Core Web API
@@ -10,21 +8,20 @@ Bidify is a fullstack auction platform built with:
 - React (TypeScript)
 - JWT Authentication
 
-This project is part of a fullstack development course and demonstrates how to build a layered Web API with authentication and a modern frontend.
-
----
+This project was developed as part of a fullstack development course and demonstrates how to build a modern auction platform using a layered Web API and a React frontend.
 
 ## 📌 Features
 
-- User registration and login with JWT
+- User registration and login with JWT authentication
 - Role-based authorization (User / Admin)
-- Create and manage auctions
-- Search auctions
+- Create, update and manage auctions
+- Search auctions by title
 - Place and manage bids
+- Prevent users from bidding on their own auctions
+- Only higher bids than the current highest bid are allowed
 - Soft delete using `IsActive`
-- Clean architecture (Controller → Service → Repository)
-
----
+- Admin can deactivate auctions and users
+- Responsive frontend
 
 ## 🏗 Architecture
 
@@ -36,4 +33,4 @@ The backend follows a structured layered architecture:
 - Entity Framework Core
 - Dependency Injection
 
-The frontend communicates with the API using JWT-based authentication.
+The React frontend communicates with the API using REST endpoints and JWT-based authentication.
