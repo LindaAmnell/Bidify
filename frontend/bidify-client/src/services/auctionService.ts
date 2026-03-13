@@ -1,7 +1,7 @@
 import type { Auction } from "../types/Auction";
 import { api } from "./api";
 
-export const getAllAuctions = (): Promise<Auction[]> => api("/auction");
+export const getAllAuctions = (): Promise<Auction[]> => api("api/auction");
 
 export const createAuction = (auction: {
   title: string;
@@ -10,7 +10,7 @@ export const createAuction = (auction: {
   imageUrl: string;
 }) => {
   const token = localStorage.getItem("token");
-  return api("/auction", {
+  return api("api/auction", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export const updateAuction = (
 ) => {
   const token = localStorage.getItem("token");
 
-  return api(`/auction/${id}`, {
+  return api(`api/auction/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -43,12 +43,12 @@ export const updateAuction = (
   });
 };
 
-export const getAuctionById = (id: number) => api(`/auction/${id}`);
+export const getAuctionById = (id: number) => api(`api/auction/${id}`);
 
 export const deactivateAuction = (id: number) => {
   const token = localStorage.getItem("token");
 
-  return api(`/auction/${id}/deactivate`, {
+  return api(`api/auction/${id}/deactivate`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,

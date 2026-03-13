@@ -1,5 +1,4 @@
-const baseUrl =
-  "https://bidify-fdgngnhzg3brbyha.swedencentral-01.azurewebsites.net/api";
+const baseUrl = import.meta.env.VITE_API_URL;
 
 export const api = async (endpoint: string, options?: RequestInit) => {
   const res = await fetch(`${baseUrl}${endpoint}`, options);
