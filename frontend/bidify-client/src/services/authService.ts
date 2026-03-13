@@ -1,13 +1,16 @@
 import { api } from "./api";
 
 export const loginUser = async (username: string, password: string) => {
-  const res = await fetch("http://localhost:5215/api/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const res = await fetch(
+    "bidify-fdgngnhzg3brbyha.swedencentral-01.azurewebsites.net/api/auth/login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
     },
-    body: JSON.stringify({ username, password }),
-  });
+  );
 
   if (!res.ok) {
     throw new Error("Login failed");
@@ -21,11 +24,14 @@ export const registerUser = (
   password: string,
   email: string,
 ) => {
-  return api("http://localhost:5215/api/Auth/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password, email }),
-  });
+  return api(
+    "bidify-fdgngnhzg3brbyha.swedencentral-01.azurewebsites.net/api/Auth/register",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password, email }),
+    },
+  );
 };
 
 export const getMe = () => {
