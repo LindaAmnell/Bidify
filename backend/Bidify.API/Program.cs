@@ -13,7 +13,16 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("frontend", policy =>
+    {
+        policy
+            .WithOrigins("https://jolly-coast-0de541d03.2.azurestaticapps.net")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddSwaggerGen(opt =>
 {
@@ -90,20 +99,15 @@ using (var scope = app.Services.CreateScope())
 
 app.UseRouting();
 
-app.UseCors(options =>
-    options.AllowAnyOrigin()
-    .AllowAnyHeader()
-    .AllowAnyMethod()
-);
+app.UseCors("frontend");
 
 app.UseAuthentication();  
 app.UseAuthorization();    
 
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 app.UseEndpoints(endpoints =>
 {

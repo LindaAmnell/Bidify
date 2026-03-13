@@ -1,8 +1,7 @@
 import type { Auction } from "../types/Auction";
 import { api } from "./api";
 
-export const getAllAuctions = (): Promise<Auction[]> =>
-  api("bidify-fdgngnhzg3brbyha.swedencentral-01.azurewebsites.net/api/auction");
+export const getAllAuctions = (): Promise<Auction[]> => api("/auction");
 
 export const createAuction = (auction: {
   title: string;
@@ -11,19 +10,14 @@ export const createAuction = (auction: {
   imageUrl: string;
 }) => {
   const token = localStorage.getItem("token");
-  console.log("TOKEN:", token);
-
-  return api(
-    "bidify-fdgngnhzg3brbyha.swedencentral-01.azurewebsites.net/api/auction",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(auction),
+  return api("/auction", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-  );
+    body: JSON.stringify(auction),
+  });
 };
 
 export const updateAuction = (
@@ -39,34 +33,25 @@ export const updateAuction = (
 ) => {
   const token = localStorage.getItem("token");
 
-  return api(
-    `bidify-fdgngnhzg3brbyha.swedencentral-01.azurewebsites.net/api/auction/${id}`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(auction),
+  return api(`/auction/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-  );
+    body: JSON.stringify(auction),
+  });
 };
 
-export const getAuctionById = (id: number) =>
-  api(
-    `bidify-fdgngnhzg3brbyha.swedencentral-01.azurewebsites.net/api/auction/${id}`,
-  );
+export const getAuctionById = (id: number) => api(`/auction/${id}`);
 
 export const deactivateAuction = (id: number) => {
   const token = localStorage.getItem("token");
 
-  return api(
-    `bidify-fdgngnhzg3brbyha.swedencentral-01.azurewebsites.net/api/auction/${id}/deactivate`,
-    {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  return api(`/auction/${id}/deactivate`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  );
+  });
 };
